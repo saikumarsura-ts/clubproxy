@@ -179,8 +179,8 @@ REST_FRAMEWORK = {
 
 
 AUTHENTICATION_BACKENDS = [
+     'django.contrib.auth.backends.ModelBackend',
      'drf_jwt_auth.auth_backend.MemberBackend',
-     'django.contrib.auth.backends.ModelBackend'
 ]
 
 # AUTHENTICATION_BACKENDS = ('project.path.to.MyBackend',)

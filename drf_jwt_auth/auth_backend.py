@@ -18,21 +18,24 @@ class MemberBackend(ModelBackend):
         customer_id = kwargs['username']
         password = kwargs['password']
         try:
-            # member = Members.objects.get(username=customer_id)
-            print("==1")
-            member = Members.objects.filter(username=customer_id).first()
-            print("==2")
-            print(member)
-            print("==3")
-            member.id = member.member_id
-            print("==4")
-            print(member.password, )
+            member = Members.objects.get(username=customer_id)
+            # print("==1")
+            # member = Members.objects.filter(username=customer_id).first()
+            # print("==2")
+            # print(member)
+            # print("==3")
+            # member.id = member.member_id
+            # print("==4")
+            # print(member.password, )
             # if member.check_password(password) is True:
             if member.password == password:
                 member.is_active = True
+                member.is_authenticated = True
+
                 return member
         except Members.DoesNotExist:
             pass
+            # return None
 
 
 

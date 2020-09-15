@@ -38,7 +38,7 @@ class Members(models.Model):
     profiletype = models.IntegerField(blank=True, null=True)
 
     is_authenticated = True
-    id = 1
+    # id = 1
 
     def __str__(self):
         return self.username
