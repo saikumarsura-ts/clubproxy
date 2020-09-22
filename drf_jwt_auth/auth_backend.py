@@ -19,14 +19,7 @@ class MemberBackend(ModelBackend):
         password = kwargs['password']
         try:
             member = Members.objects.get(username=customer_id)
-            # print("==1")
-            # member = Members.objects.filter(username=customer_id).first()
-            # print("==2")
-            # print(member)
-            # print("==3")
-            # member.id = member.member_id
-            # print("==4")
-            # print(member.password, )
+            member.id = member.member_id
             # if member.check_password(password) is True:
             if member.password == password:
                 member.is_active = True
@@ -34,8 +27,7 @@ class MemberBackend(ModelBackend):
 
                 return member
         except Members.DoesNotExist:
-            pass
-            # return None
+            return None
 
 
 
@@ -45,7 +37,7 @@ class CustomAuthBackend(JWTAuthentication):
     #     return True
 
         def get_user(self, validated_token):
-            print(validated_token,"===============")
+            # print(validated_token,"===============")
             """
             Attempts to find and return a user using the given validated token.
             """
@@ -56,7 +48,9 @@ class CustomAuthBackend(JWTAuthentication):
                 raise InvalidToken(_('Token contained no recognizable user identification'))
 
             try:
-                user = Members.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+                print("err ===   ")
+                # user = Members.objects.get(**{api_settings.USER_ID_FIELD: user_id})
+                user = Members.objects.get(member_id = user_id)
             except Members.DoesNotExist:
                 raise AuthenticationFailed(_('User not found'), code='user_not_found')
 

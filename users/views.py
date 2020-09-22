@@ -34,10 +34,12 @@ class AuthView(APIView):
 
 
 class HelloView(APIView):
+    print(1)
     permission_classes = (permissions.IsAuthenticated,)
     # permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
+        print(2)
         
         # usernames = [user.email for user in User.objects.all()]
         print(request.user.username)

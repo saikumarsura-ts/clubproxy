@@ -9,6 +9,7 @@ class MemberAdmin(admin.ModelAdmin):
     list_display = ("username", "disabled")
     list_filter = ("disabled", )
     search_fields = ("username__startswith", )
+    # exclude = ('member_id',)
     
     def save_model(self, request, obj, form, change):
         # obj.added_by = request.user

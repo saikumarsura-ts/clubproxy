@@ -1,33 +1,18 @@
 from django.db import models
-# from django.contrib.auth.models import (
-#     AbstractBaseUser, PermissionsMixin, BaseUserManager
-# )
 
-
-# class UserManager(BaseUserManager):
-#     def _create_user(self, email, password, **extra_fields):
-#         """
-#         Creates and saves a User with the given email and password.
-#         """
-#         if not email:
-#             raise ValueError('The given email must be set')
-#         try:
-#             user = self.model(email=email, **extra_fields)
-#             user.set_password(password)
-#             user.save(using=self._db)
-#             return user
-#         except:
-#             raise
- 
-#     def create_user(self, email, password=None, **extra_fields):
-#         return self._create_user(email, password, **extra_fields)
- 
-#     def create_superuser(self, email, password, **extra_fields):
-#         return self._create_user(email, password=password, **extra_fields)
-
+def increment_member_id():
+    member_obj = Members.objects.all().order_by('member_id').last()
+    if not member_obj:
+        return 1
+    # booking_id = last_booking.order_key
+    # booking_int = int(booking_id[2::])
+    # new_booking_int = booking_int + 1
+    # new_booking_id = 'GT' + str(new_booking_int)
+    return member_obj.member_id + 1
 
 class Members(models.Model):
-    member_id = models.BigIntegerField()
+    # id = models.AutoField(unique=True)
+    member_id = models.AutoField(primary_key=True, default=increment_member_id)
     membertypeid = models.IntegerField(blank=True, null=True)
     username = models.CharField(max_length=100, blank=True, null=True, unique=True)
     password = models.CharField(max_length=100, blank=True, null=True)
@@ -38,14 +23,15 @@ class Members(models.Model):
     profiletype = models.IntegerField(blank=True, null=True)
 
     is_authenticated = True
-    # id = 1
+    # id = member_id
 
     def __str__(self):
         return self.username
 
     class Meta:
         db_table = "members"
-        managed = True
+        managed = False
+        # managed = True
         verbose_name = 'Member List'
 
 
